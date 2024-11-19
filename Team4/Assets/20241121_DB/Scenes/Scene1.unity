@@ -7591,8 +7591,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9ab94841b782f45b2770c7edfcf0e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joinui: {fileID: 0}
-  exitui: {fileID: 0}
+  Jclosebt: {fileID: 972886004}
+  Eclosebt: {fileID: 359053515}
+  joinbt: {fileID: 416504817}
+  exitbt: {fileID: 400735037}
+  joinUI: {fileID: 1969143733}
+  exitUI: {fileID: 1490657205}
 --- !u!4 &1948803483
 Transform:
   m_ObjectHideFlags: 0
