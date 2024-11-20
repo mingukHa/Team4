@@ -26,7 +26,7 @@ public class S1Main : MonoBehaviour
     [SerializeField]
     private TMP_InputField password;
 
-    private const string loginURL = "http://127.0.0.1/login.php";
+    private const string loginURL = "http://192.168.2.24/login.php";
 
 
     private void Start()
