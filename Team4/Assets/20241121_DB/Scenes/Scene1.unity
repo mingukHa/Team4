@@ -8095,6 +8095,8 @@ MonoBehaviour:
   exitbt: {fileID: 400735037}
   joinUI: {fileID: 1969143733}
   exitUI: {fileID: 1490657205}
+  username: {fileID: 1771638819}
+  password: {fileID: 224698513}
 --- !u!4 &1948803483
 Transform:
   m_ObjectHideFlags: 0
