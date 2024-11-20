@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StoreItems
   - InventoryItems
+  - shop_item
   layers:
   - Default
   - TransparentFX
