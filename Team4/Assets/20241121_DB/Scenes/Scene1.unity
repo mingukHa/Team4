@@ -8089,6 +8089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Jclosebt: {fileID: 972886004}
+  Loginbt: {fileID: 1237646091}
   Eclosebt: {fileID: 359053515}
   joinbt: {fileID: 416504817}
   exitbt: {fileID: 400735037}
@@ -8124,7 +8125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1969143734
 RectTransform:
   m_ObjectHideFlags: 0

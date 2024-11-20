@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class S1Main : MonoBehaviour
 {
     [SerializeField]
     private Button Jclosebt = null;
+    [SerializeField]
+    private Button Loginbt = null;
     [SerializeField]
     private Button Eclosebt = null;
     [SerializeField]
@@ -20,12 +23,16 @@ public class S1Main : MonoBehaviour
 
     private void Start()
     {
+        Loginbt.onClick.AddListener(() => OnLogin());
         joinbt.onClick.AddListener(() => OnjoinUI(true));
         exitbt.onClick.AddListener(() => OnExitUI(true));
         Jclosebt.onClick.AddListener(() => Jclose(false));
         Eclosebt.onClick.AddListener(() => Eclose(false));
     }
-
+    private void OnLogin()
+    {
+        SceneManager.LoadScene("Scene2");
+    }
     private void Jclose(bool close)
     {
         joinUI.SetActive(close);
