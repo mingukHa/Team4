@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        startPos = new Vector3(12f, 1f, 1f);
+        startPos = new Vector3(12f, 0.1f, 1f);
     }
 
     private void Update()
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
                         {
                             // 인벤토리에 복사된 아이템이 배치될 위치
                             Vector3 goPos = startPos + new Vector3(col * invenItemDist.x, 0, row * invenItemDist.z);
-                            GameObject newGo = Instantiate(go, goPos, Quaternion.identity);
+                            GameObject newGo = Instantiate(go, goPos, go.transform.rotation);
 
                             // 생성된 아이템 InvenItemHolder로 배치 후 태그 변경
                             newGo.transform.SetParent(invenItemHolder.transform);
