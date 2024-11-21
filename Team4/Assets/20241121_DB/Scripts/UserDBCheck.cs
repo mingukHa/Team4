@@ -8,6 +8,8 @@ using System;
 
 public class UserDBCheck : MonoBehaviour
 {
+    public event Action OnUserDataLoaded;  // 데이터 로드 완료 시 호출될 이벤트
+
     public class User_ItemData
     {
         public string id { get; set; }
@@ -70,6 +72,7 @@ public class UserDBCheck : MonoBehaviour
                 {
                     Debug.Log(itemdata.id + ":" + itemdata.inventory_num + ":" + itemdata.item_num + ":" + itemdata.item_name + ":" + itemdata.item_state);
                 }
+                OnUserDataLoaded?.Invoke();
             }
         }
     }

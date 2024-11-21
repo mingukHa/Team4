@@ -8,12 +8,16 @@ using JetBrains.Annotations;
 public class GameManager : MonoBehaviour
 {
     public DBCheck dbCheck;
+    public UserDBCheck userdbCheck;
 
     private GameObject[,] itemList = new GameObject[4, 1]; // 인벤토리 아이템을 담을 1 x 4 배열
     private GameObject go;                                 // Ray와 상호작용할 상점 아이템
 
+    private User_ItemData useritem; //유저인벤 아이템 DB데이터
     [SerializeField]
-    private GameObject invenItemsHolder; // 인벤토리에 생성될 아이템 홀더
+    private GameObject storeitem_list; //상점 아이템 리스트
+    [SerializeField]
+    private GameObject invenItemsHolder; // 인벤토리에 생성될 아이템 홀더, 유저 인벤 아이템 리스트
     [SerializeField]
     private Camera subCamera;            // 상점 오브젝트를 비출 서브카메라
 
@@ -23,9 +27,6 @@ public class GameManager : MonoBehaviour
 
     private Vector3 cursorPos;           // 마우스 커서 위치
 
-    private User_ItemData useritem; //유저인벤 아이템 DB데이터
-    [SerializeField]
-    private GameObject storeitem_list; //상점 아이템 리스트
     private List<Item_hover> itemHovers = new List<Item_hover>();// Item_hover(상점 아이템 DB저장됨) 컴포넌트들을 저장할 리스트
 
     public void SetItemData(User_ItemData data)
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
 
         // DBCheck에서 데이터 로드 완료 후 작업을 수행하도록 이벤트 등록
         dbCheck.OnDataLoaded += OnDataLoaded;
+        userdbCheck.OnUserDataLoaded += OnUserDataLoaded;
 
         // 변수 초기화
         startPos = new Vector3(7f, 0.1f, 1.8f);
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
         // DB에서 데이터가 로드된 후 수행할 작업
         Debug.Log("데이터 로드 완료");
 
-        // 아이템 리스트에서 `Item_hover` 컴포넌트를 가져와 `itemHovers` 리스트에 추가
+        // 아이템 리스트에서 Item_hover 컴포넌트를 가져와 `itemHovers` 리스트에 추가
         itemHovers.Clear();  // 이전에 저장된 값이 있다면 초기화
 
         foreach (Transform child in storeitem_list.transform)
@@ -86,23 +88,45 @@ public class GameManager : MonoBehaviour
                 Debug.Log("No Item_hover component on: " + child.name);  // 컴포넌트가 없을 경우 로그 출력
             }
         }
-        PrintItemData();
+        //PrintItemData();
     }
-
-    private void PrintItemData()
+    private void OnUserDataLoaded()
     {
-        Debug.Log("다 호출됐나?");
-        foreach (Item_hover itemHover in itemHovers)
-        {
-            Debug.Log("gameManager Item");
-            StoreItemData itemData = itemHover.GetItemData(); // Item_hover에서 저장된 데이터 가져오기
+        // DB에서 데이터가 로드된 후 수행할 작업
+        Debug.Log("유저 인벤 데이터 로드 완료");
 
-            // itemData의 각 속성 활용
-            Debug.Log("gameManager Item Num: " + itemData.item_num);
-            Debug.Log("gameManager Item Name: " + itemData.item_name);
-            Debug.Log("gameManager Item State: " + itemData.item_state);
+        itemHovers.Clear();  
+
+        foreach (Transform child in invenItemsHolder.transform)
+        {
+            Item_hover itemHover = child.GetComponent<Item_hover>();
+            if (itemHover != null)
+            {
+                itemHovers.Add(itemHover);  
+            }
+            else
+            {
+                Debug.Log("No Item_hover component on: " + child.name);  
+            }
         }
+        
     }
+
+
+
+    //private void PrintItemData()
+    //{
+    //    foreach (Item_hover itemHover in itemHovers)
+    //    {
+    //        Debug.Log("gameManager Item");
+    //        StoreItemData itemData = itemHover.GetItemData(); // Item_hover에서 저장된 데이터 가져오기
+
+    //        // itemData의 각 속성 활용
+    //        Debug.Log("gameManager Item Num: " + itemData.item_num);
+    //        Debug.Log("gameManager Item Name: " + itemData.item_name);
+    //        Debug.Log("gameManager Item State: " + itemData.item_state);
+    //    }
+    //}
 
 
     private void Update()

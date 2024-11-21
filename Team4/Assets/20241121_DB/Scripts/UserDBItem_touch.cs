@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DBItem_touch : MonoBehaviour
+public class UserDBItem_touch : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> storeItems;  // 클릭 가능한 게임 오브젝트 리스트
+    private List<GameObject> userItems;  // 클릭 가능한 게임 오브젝트 리스트
 
     public List<GameObject> GetGameObjects()
     {
-        return storeItems;
+        return userItems;
     }
 
     private void Update()
@@ -21,14 +21,14 @@ public class DBItem_touch : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                // Raycast로 맞은 오브젝트가 gameObjects 리스트에 포함되고, "StoreItem" 태그를 가진 경우
-                if (storeItems.Contains(hit.transform.gameObject) && hit.transform.CompareTag("StoreItem"))
+                // Raycast로 맞은 오브젝트가 gameObjects 리스트에 포함되고, "InventoryItem" 태그를 가진 경우
+                if (userItems.Contains(hit.transform.gameObject) && hit.transform.CompareTag("InventoryItem"))
                 {
                     // 클릭된 게임 오브젝트의 이름을 콘솔에 출력
                     Debug.Log("Clicked on: " + hit.transform.gameObject.name);
 
                     // 해당 오브젝트의 인덱스를 구해서 출력
-                    int index = storeItems.IndexOf(hit.transform.gameObject);
+                    int index = userItems.IndexOf(hit.transform.gameObject);
                     Debug.Log("This is element number: " + index);
                 }
             }
