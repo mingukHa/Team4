@@ -1,9 +1,7 @@
 using UnityEngine;
 using static UserDBCheck;
 using static DBCheck;
-using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +11,7 @@ public class GameManager : MonoBehaviour
     private GameObject[,] itemList = new GameObject[4, 1]; // 인벤토리 아이템을 담을 1 x 4 배열
     private GameObject go;                                 // Ray와 상호작용할 상점 아이템
 
-    private User_ItemData useritem; //유저인벤 아이템 DB데이터
+    //private User_ItemData useritem; //유저인벤 아이템 DB데이터
     [SerializeField]
     private GameObject storeitem_list; //상점 아이템 리스트
     [SerializeField]
@@ -28,11 +26,18 @@ public class GameManager : MonoBehaviour
     private Vector3 cursorPos;           // 마우스 커서 위치
 
     private List<Item_hover> itemHovers = new List<Item_hover>();// Item_hover(상점 아이템 DB저장됨) 컴포넌트들을 저장할 리스트
+    private List<User_Item_hover> useritemHovers = new List<User_Item_hover>();
+    private List<User_ItemData> userItemDataList = new List<User_ItemData>(); // 유저 아이템 데이터
 
-    public void SetItemData(User_ItemData data)
-    {
-        useritem = data;  // 아이템 데이터를 저장
-    }
+    [SerializeField]
+    private GameObject user_statusBox;  // 상점 아이템 상태 박스 (shop_item_status 오브젝트)
+    [SerializeField]
+    private status_text user_statusText; // 인벤 아이템 상태 텍스트 (InvenItemsHolder 오브젝트)
+
+    //public void SetItemData(User_ItemData data)
+    //{
+    //    useritem = data;  // 아이템 데이터를 저장
+    //}
 
     private void Start()
     {
@@ -90,30 +95,6 @@ public class GameManager : MonoBehaviour
         }
         //PrintItemData();
     }
-    private void OnUserDataLoaded()
-    {
-        // DB에서 데이터가 로드된 후 수행할 작업
-        Debug.Log("유저 인벤 데이터 로드 완료");
-
-        itemHovers.Clear();  
-
-        foreach (Transform child in invenItemsHolder.transform)
-        {
-            Item_hover itemHover = child.GetComponent<Item_hover>();
-            if (itemHover != null)
-            {
-                itemHovers.Add(itemHover);  
-            }
-            else
-            {
-                Debug.Log("No Item_hover component on: " + child.name);  
-            }
-        }
-        
-    }
-
-
-
     //private void PrintItemData()
     //{
     //    foreach (Item_hover itemHover in itemHovers)
@@ -127,6 +108,99 @@ public class GameManager : MonoBehaviour
     //        Debug.Log("gameManager Item State: " + itemData.item_state);
     //    }
     //}
+    private void OnUserDataLoaded()
+    {
+        // 유저 인벤토리 데이터가 로드된 후 수행할 작업
+        Debug.Log("유저 인벤 데이터 로드 완료");
+
+        userItemDataList.Clear();  // 이전에 저장된 데이터가 있다면 초기화
+        userItemDataList.AddRange(userdbCheck.GetUserItemDatas()); // 유저 아이템 데이터 리스트 가져오기
+
+        // 유저 인벤 아이템과 상점 아이템을 비교하고 인벤토리 복제
+        CompareAndAddItemsToInventory();
+
+        // 복제 후, Item_hover 제거 작업
+        RemoveItemHoverFromInventory();
+    }
+
+    private void RemoveItemHoverFromInventory()
+    {
+        // 아이템 리스트를 순회하며 복제된 아이템들의 Item_hover 컴포넌트를 제거
+        foreach (var item in itemList)
+        {
+            if (item != null)
+            {
+                Item_hover itemHover = item.GetComponent<Item_hover>();
+                if (itemHover != null)
+                {
+                    Destroy(itemHover);  // Item_hover 컴포넌트 제거
+                }
+
+                // 그 후에 User_Item_hover를 추가
+                User_Item_hover userItemHover = item.AddComponent<User_Item_hover>();
+                if (userItemHover != null)
+                {
+                    // statusBox와 statusText를 해당 아이템에 할당
+                    userItemHover.statusBox = user_statusBox;
+                    userItemHover.statusText = user_statusText;
+                }
+            }
+        }
+    }
+
+    private void CompareAndAddItemsToInventory()
+    {
+        foreach (var userItem in userItemDataList)
+        {
+            foreach (var storeItem in itemHovers)
+            {
+                // 유저 아이템 번호와 상점 아이템 번호 비교
+                if (userItem.item_num == storeItem.GetItemData().item_num)
+                {
+                    // 인벤토리에 이미 있는지 확인 후, 없으면 복제
+                    AddItemToInventory(storeItem.gameObject);
+                    break;
+                }
+            }
+        }
+    }
+    private void AddItemToInventory(GameObject storeItem)
+    {
+        int itemCount = 0;
+
+        // 인벤토리에 복사된 아이템이 배치될 위치 계산
+        for (int row = 0; row < 4; ++row)
+        {
+            for (int col = 0; col < 1; ++col)
+            {
+                if (itemList[row, col] == null)
+                {
+                    Vector3 goPos = startPos + new Vector3(col * invenItemDist.x, 0, row * invenItemDist.z);
+
+                    // 아이템 복제 및 위치 설정
+                    GameObject newGo = Instantiate(
+                        storeItem, goPos, Quaternion.Euler(
+                            storeItem.transform.rotation.eulerAngles.x,
+                            storeItem.transform.rotation.eulerAngles.y + 30f,
+                            storeItem.transform.rotation.eulerAngles.z
+                        ));
+
+                    // 아이템 크기 조정
+                    newGo.transform.localScale = storeItem.transform.localScale * invenItemScale;
+
+                    // 인벤토리의 자식으로 설정
+                    newGo.transform.SetParent(invenItemsHolder.transform);
+                    itemList[row, col] = newGo;
+                    newGo.tag = "InventoryItem";
+
+                    itemCount++;
+                    return;
+                }
+            }
+        }
+    }
+
+
 
 
     private void Update()

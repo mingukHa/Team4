@@ -25,6 +25,7 @@ public class S1Main : MonoBehaviour
     private TMP_InputField username;
     [SerializeField]
     private TMP_InputField password;
+    
 
     private const string loginURL = "http://127.0.0.1/login.php";
 
@@ -39,6 +40,7 @@ public class S1Main : MonoBehaviour
     }
     private IEnumerator LoginCoroutine(string username, string password)
     {
+        Debug.Log($"{username},{password} 값 들어옴");
         WWWForm form = new WWWForm();
         form.AddField("loginUser", username);
         form.AddField("loginPass", password);
@@ -53,6 +55,7 @@ public class S1Main : MonoBehaviour
             if (response.Contains("Login success"))
             {
                 Debug.Log("로그인 성공!");
+
                 SceneManager.LoadScene("Scene2"); // 다음 씬으로 전환
             }
             else

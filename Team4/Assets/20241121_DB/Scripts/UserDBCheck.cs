@@ -23,6 +23,11 @@ public class UserDBCheck : MonoBehaviour
 
     private List<User_ItemData> user_itemDatas;
 
+    public List<User_ItemData> GetUserItemDatas()
+    {
+        return user_itemDatas;
+    }
+
     private void Start()
     {
         StartCoroutine(GetScoreCoroutine());

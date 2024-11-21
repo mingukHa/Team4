@@ -5,10 +5,10 @@ using static UserDBCheck;
 public class User_Item_hover : MonoBehaviour
 {
     // 활성화할 특정 게임오브젝트
-    [SerializeField]
-    private GameObject statusBox;
-    [SerializeField]
-    private status_text statusText;  // 아이템에 맞는 텍스트를 업데이트할 statusText
+
+    public GameObject statusBox;
+
+    public status_text statusText;  // 아이템에 맞는 텍스트를 업데이트할 statusText
 
     private User_ItemData itemData;  // 해당 아이템의 데이터 저장
 
