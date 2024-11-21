@@ -12,9 +12,12 @@ public class exit : MonoBehaviour
     [SerializeField]
     private TMP_InputField Password;
     [SerializeField]
-    private TMP_InputField passwordcheck;
-    [SerializeField]
     private Button exitbt;
+    [SerializeField]
+    private GameObject exitUI;
+    [SerializeField]
+    private TMP_InputField noexit;
+
     private const string exitURL = "http://127.0.0.1/exit.php";
     private void Start()
     {
@@ -33,15 +36,16 @@ public class exit : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.DataProcessingError)
             {
-                Debug.LogError($"요청 실패: {www.error}");
+                Debug.LogError($"요청 실패: {www.error}");                
             }
             else
             {
                 string response = www.downloadHandler.text;
                 Debug.Log($"서버 응답 수신 - Response: {response}");
-
+                exitUI.SetActive(false);
+                    
             }
         }
-    }
+    }   
 
 }

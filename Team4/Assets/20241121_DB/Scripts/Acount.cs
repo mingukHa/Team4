@@ -35,6 +35,8 @@ public class Acount : MonoBehaviour
     private TextMeshProUGUI idckMessage;
     [SerializeField]
     private Button acountet;
+    [SerializeField]
+    private GameObject acountUI;
 
     private const string idckURL = "http://127.0.0.1/idck.php";
     private const string acountURL = "http://127.0.0.1/acount.php";
@@ -84,7 +86,8 @@ public class Acount : MonoBehaviour
             {
                 string response = www.downloadHandler.text;
                 Debug.Log($"서버 응답 수신 - Response: {response}");
-
+                
+                    acountUI.SetActive(false);
             }
         }
     }
