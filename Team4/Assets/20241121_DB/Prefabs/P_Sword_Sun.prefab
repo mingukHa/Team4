@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2012264115621047174}
   - component: {fileID: 3273093506546126587}
   - component: {fileID: 2467218516619188849}
-  - component: {fileID: -8333192653581866272}
+  - component: {fileID: -673609384538358421}
   m_Layer: 0
   m_Name: P_Sword_Sun
   m_TagString: Untagged
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &-8333192653581866272
-MeshCollider:
+--- !u!65 &-673609384538358421
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,7 +105,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1612707546340198182, guid: dc11d8a54fc408445b60a65fa24179b0, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.407301, y: 5.591359, z: 1.9876482}
+  m_Center: {x: -0.000000022351742, y: 0, z: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 617190031928783658}
   - component: {fileID: 7310876401539572550}
   - component: {fileID: 3677294326217733468}
-  - component: {fileID: 9074733044874343170}
+  - component: {fileID: 2146351180488745597}
   m_Layer: 0
   m_Name: P_Sword_Space
   m_TagString: Untagged
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9074733044874343170
-MeshCollider:
+--- !u!65 &2146351180488745597
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,7 +105,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4331866230498711432, guid: dc11d8a54fc408445b60a65fa24179b0, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.16808987, y: 5.58809, z: 0.70612717}
+  m_Center: {x: 0, y: 0, z: 0}
