@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - StoreItems
-  - InventoryItems
+  - StoreItem
+  - InventoryItem
   layers:
   - Default
   - TransparentFX
