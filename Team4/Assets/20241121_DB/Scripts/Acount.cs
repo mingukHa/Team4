@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 
 public class Acount : MonoBehaviour
 {
@@ -38,12 +40,32 @@ public class Acount : MonoBehaviour
     private const string acountURL = "http://127.0.0.1/acount.php";
     private void Start()
     {
+        acountet.interactable = false;
         Password.onValueChanged.AddListener(OnPasswordChanged);
         passwordcheck.onValueChanged.AddListener(OnPasswordCheckChanged);
         idck.onClick.AddListener(() => StartCoroutine(OnIDCoroutine(Username.text)));
-        acountet.onClick.AddListener(() => StartCoroutine(acount(Username.text, Password.text)));
+        acountet.onClick.AddListener(() => StartCoroutine(acountCoroutine(Username.text, Password.text)));
+        
     }
-    private IEnumerator acount(string username, string password)
+    private void FixedUpdate()
+    {
+        acounbtON();
+    }
+    private void acounbtON()
+    {
+        if (idckOX.color == Color.green && passwordCheckicon.color == Color.green && passwordMatcgicon.color == Color.green)
+        {
+            acountet.interactable = true;
+
+        }
+        else
+        {
+            acountet.interactable = false;
+        }
+
+    }
+
+    private IEnumerator acountCoroutine(string username, string password)
     {
         Debug.Log($"{username},{password} 값 들어옴");
 
@@ -110,7 +132,7 @@ public class Acount : MonoBehaviour
             return;
         }
 
-        if (!IsPasswordValid(Password.text))
+        if (!IsPassword(Password.text))
         {
             passwordMessage.text = "비밀번호는 영어, 숫자로 4~10자 이내로 입력하세요.";
             passwordMessage.color = Color.red;
@@ -136,7 +158,7 @@ public class Acount : MonoBehaviour
 
     private void OnPasswordChanged(string password)
     {
-        if (IsPasswordValid(password))
+        if (IsPassword(password))
         {
             passwordMessage.text = "사용 가능한 비밀번호입니다.";
             passwordMessage.color = Color.green;
@@ -170,14 +192,15 @@ public class Acount : MonoBehaviour
         }
     }
 
-    private bool IsPasswordValid(string password)
+    private bool IsPassword(string password) //정규표현식으로 배열의 길이와 영어,숫자의 입력만 받는다
     {
         if (password.Length < 4 || password.Length > 10)
         {
             return false;
         }
-        System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("^[a-zA-Z0-9]+$");
+        Regex regex = new Regex("^[a-zA-Z0-9]+$");
         return regex.IsMatch(password);
+        
     }
 
     private bool IsPasswordMatch()

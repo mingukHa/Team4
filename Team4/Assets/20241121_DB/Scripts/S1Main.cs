@@ -39,6 +39,7 @@ public class S1Main : MonoBehaviour
     }
     private IEnumerator LoginCoroutine(string username, string password)
     {
+        Debug.Log($"{username},{password} °ª µé¾î¿È");
         WWWForm form = new WWWForm();
         form.AddField("loginUser", username);
         form.AddField("loginPass", password);
