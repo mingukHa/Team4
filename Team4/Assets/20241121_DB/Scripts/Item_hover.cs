@@ -45,7 +45,7 @@ public class Item_hover : MonoBehaviour
             Vector3 statusBoxSize = statusChildRenderer.bounds.size;
 
             // 아이템 오브젝트의 중심점에서 statusBox의 좌상단이 오도록 위치 조정
-            Vector3 newPosition = itemCenter + new Vector3(statusBoxSize.x / 2, -statusBoxSize.y / 2, -0.75f);
+            Vector3 newPosition = itemCenter + new Vector3(statusBoxSize.x / 2, 0.5f, -statusBoxSize.z / 2);
 
             // statusBox의 위치를 새로 계산된 위치로 설정
             statusBox.transform.position = newPosition;

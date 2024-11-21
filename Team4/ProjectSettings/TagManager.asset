@@ -4,14 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
-<<<<<<< HEAD
-  - StoreItem
-  - InventoryItem
-=======
   - StoreItems
   - InventoryItems
-  - shop_item
->>>>>>> 6183d6ca5d54a2a24b73604aac550b88b84eaff5
+  - StoreItem
   layers:
   - Default
   - TransparentFX
