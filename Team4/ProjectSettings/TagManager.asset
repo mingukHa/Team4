@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - StoreItems
-  - InventoryItems
   - StoreItem
-  - shop_item
+  - InveotoryItem
   layers:
   - Default
   - TransparentFX
@@ -44,9 +42,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: New Layer 1
-    uniqueID: 3278278397
     locked: 0
   m_RenderingLayers:
   - Default
