@@ -1,0 +1,7 @@
+test1 db생성 후
+
+DROP TABLE IF EXISTS `account`; CREATE TABLE `account` ( `id` varchar(10) NOT NULL, `pw` varchar(10) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DROP TABLE IF EXISTS `inventory`; CREATE TABLE `inventory` ( `inventory_num` int(11) NOT NULL, `id` varchar(10) NOT NULL, `item_num` int(11) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DROP TABLE IF EXISTS `item`; CREATE TABLE `item` ( `item_num` int(11) NOT NULL, `item_name` varchar(10) DEFAULT NULL, `item_state` text DEFAULT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
