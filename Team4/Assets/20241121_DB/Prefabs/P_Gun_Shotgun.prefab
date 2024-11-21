@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3389422188200123168}
   - component: {fileID: 5931983131517247766}
   - component: {fileID: 103066372807466479}
-  - component: {fileID: 4558942929055914665}
+  - component: {fileID: 4031512047591025559}
   m_Layer: 0
   m_Name: P_Gun_Shotgun
   m_TagString: Untagged
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4558942929055914665
-MeshCollider:
+--- !u!65 &4031512047591025559
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,7 +105,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -806129354666486908, guid: 1ba521b1b6e5e4f4eae2768a5263899f, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.1557017, y: 0.65167415, z: 3.3622777}
+  m_Center: {x: 0.0008386597, y: 0.08331458, z: 0.8163575}
