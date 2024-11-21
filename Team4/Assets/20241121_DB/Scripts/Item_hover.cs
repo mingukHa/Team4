@@ -9,7 +9,7 @@ public class Item_hover : MonoBehaviour
     [SerializeField]
     private status_text statusText;  // 아이템에 맞는 텍스트를 업데이트할 statusText
 
-    private ItemData itemData;  // 해당 아이템의 데이터 저장
+    private StoreItemData itemData;  // 해당 아이템의 데이터 저장
 
     void Start()
     {
@@ -23,9 +23,14 @@ public class Item_hover : MonoBehaviour
         //statusText = statusBox.GetComponent<status_text>();
     }
 
-    public void SetItemData(ItemData data)
+    public void SetItemData(StoreItemData data)
     {
         itemData = data;  // 아이템 데이터를 저장
+    }
+
+    public StoreItemData GetItemData()
+    {
+        return itemData;  // 아이템 데이터를 반환
     }
 
     void OnMouseEnter()

@@ -1,7 +1,14 @@
 using UnityEngine;
+using static UserDBCheck;
+using static DBCheck;
+using NUnit.Framework.Interfaces;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
+    public DBCheck dbCheck;
+
     private GameObject[,] itemList = new GameObject[4, 1]; // 인벤토리 아이템을 담을 1 x 4 배열
     private GameObject go;                                 // Ray와 상호작용할 상점 아이템
 
@@ -16,13 +23,87 @@ public class GameManager : MonoBehaviour
 
     private Vector3 cursorPos;           // 마우스 커서 위치
 
+    private User_ItemData useritem; //유저인벤 아이템 DB데이터
+    [SerializeField]
+    private GameObject storeitem_list; //상점 아이템 리스트
+    private List<Item_hover> itemHovers = new List<Item_hover>();// Item_hover(상점 아이템 DB저장됨) 컴포넌트들을 저장할 리스트
+
+    public void SetItemData(User_ItemData data)
+    {
+        useritem = data;  // 아이템 데이터를 저장
+    }
+
     private void Start()
     {
+        if (dbCheck == null)
+        {
+            Debug.LogError("dbCheck is not assigned in GameManager");
+            return;
+        }
+
+        // DBCheck에서 데이터 로드 완료 후 작업을 수행하도록 이벤트 등록
+        dbCheck.OnDataLoaded += OnDataLoaded;
+
         // 변수 초기화
         startPos = new Vector3(7f, 0.1f, 1.8f);
         invenItemDist = new Vector3(0f, 0f, -2.2f);
         invenItemScale = 2.5f;
+
+
+        //// 아이템 리스트에 있는 모든 아이템 오브젝트에서 Item_hover 컴포넌트를 가져옴
+        //foreach (Transform child in storeitem_list.transform)
+        //{
+        //    Item_hover itemHover = child.GetComponent<Item_hover>();
+        //    if (itemHover != null)
+        //    {
+        //        Debug.Log("Item_hover component found for: " + child.name); // 아이템이 제대로 가져왔을 때 출력
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("No Item_hover component on: " + child.name); // Item_hover 컴포넌트가 없을 때 출력
+        //    }
+        //}
+        //// 아이템들의 데이터를 활용하는 예시
+        //PrintItemData();
     }
+    private void OnDataLoaded()
+    {
+        // DB에서 데이터가 로드된 후 수행할 작업
+        Debug.Log("데이터 로드 완료");
+
+        // 아이템 리스트에서 `Item_hover` 컴포넌트를 가져와 `itemHovers` 리스트에 추가
+        itemHovers.Clear();  // 이전에 저장된 값이 있다면 초기화
+
+        foreach (Transform child in storeitem_list.transform)
+        {
+            Item_hover itemHover = child.GetComponent<Item_hover>();
+            if (itemHover != null)
+            {
+                itemHovers.Add(itemHover);  // 리스트에 추가
+            }
+            else
+            {
+                Debug.Log("No Item_hover component on: " + child.name);  // 컴포넌트가 없을 경우 로그 출력
+            }
+        }
+        PrintItemData();
+    }
+
+    private void PrintItemData()
+    {
+        Debug.Log("다 호출됐나?");
+        foreach (Item_hover itemHover in itemHovers)
+        {
+            Debug.Log("gameManager Item");
+            StoreItemData itemData = itemHover.GetItemData(); // Item_hover에서 저장된 데이터 가져오기
+
+            // itemData의 각 속성 활용
+            Debug.Log("gameManager Item Num: " + itemData.item_num);
+            Debug.Log("gameManager Item Name: " + itemData.item_name);
+            Debug.Log("gameManager Item State: " + itemData.item_state);
+        }
+    }
+
 
     private void Update()
     {
