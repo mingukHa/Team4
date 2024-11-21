@@ -42,7 +42,7 @@ public class Acount : MonoBehaviour
     private const string acountURL = "http://127.0.0.1/acount.php";
     private void Start()
     {
-        acountet.interactable = false;
+        acountet.interactable = false; //회원 가입 버튼 off
         Password.onValueChanged.AddListener(OnPasswordChanged);
         passwordcheck.onValueChanged.AddListener(OnPasswordCheckChanged);
         idck.onClick.AddListener(() => StartCoroutine(OnIDCoroutine(Username.text)));
@@ -58,11 +58,12 @@ public class Acount : MonoBehaviour
         if (idckOX.color == Color.green && passwordCheckicon.color == Color.green && passwordMatcgicon.color == Color.green)
         {
             acountet.interactable = true;
-
+            //아이콘들이 초록색이 다 되면 가입 버튼이 켜진다
         }
         else
         {
             acountet.interactable = false;
+            //하나라도 빨간색이면 꺼진다
         }
 
     }
@@ -127,7 +128,7 @@ public class Acount : MonoBehaviour
     private void OnSignupClicked()
     {
 
-        if (!IsPasswordMatch())
+        if (!IsPasswordMatch())//만약에 비밀번호가 일치하지 않다면
         {
             passwordMatchMessage.text = "비밀번호가 일치하지 않습니다.";
             passwordMatchMessage.color = Color.red;
@@ -144,9 +145,9 @@ public class Acount : MonoBehaviour
 
     }
 
-    private void OnIdCheckID()
+    private void OnIdCheckID() //아이디 체크 함수
     {
-        string username = Username.text.Trim();
+        string username = Username.text.Trim(); //트림을 이용하여 보정
 
         if (string.IsNullOrEmpty(username))
         {
@@ -159,7 +160,7 @@ public class Acount : MonoBehaviour
 
     }
 
-    private void OnPasswordChanged(string password)
+    private void OnPasswordChanged(string password) 
     {
         if (IsPassword(password))
         {
@@ -197,16 +198,16 @@ public class Acount : MonoBehaviour
 
     private bool IsPassword(string password) //정규표현식으로 배열의 길이와 영어,숫자의 입력만 받는다
     {
-        if (password.Length < 4 || password.Length > 10)
+        if (password.Length < 4 || password.Length > 10) //배열의 길이 설정
         {
             return false;
         }
-        Regex regex = new Regex("^[a-zA-Z0-9]+$");
+        Regex regex = new Regex("^[a-zA-Z0-9]+$"); //숫자와 영어만 입력 받음
         return regex.IsMatch(password);
         
     }
 
-    private bool IsPasswordMatch()
+    private bool IsPasswordMatch() //비밀번호 텍스트가 같은지 확인
     {
         return Password.text == passwordcheck.text;
     }
